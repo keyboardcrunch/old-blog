@@ -5,22 +5,22 @@
     
     
     
-    <link>http://keyboardcrunch.github.io/</link>
+    <link>https://keyboardcrunch.github.io/</link>
     <description>Recent content on keyboardcrunch</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© keyboardcrunch</copyright>
     <lastBuildDate>Sat, 30 Jan 2021 14:42:21 -0600</lastBuildDate>
     
-	<atom:link href="http://keyboardcrunch.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://keyboardcrunch.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Email Security</title>
-      <link>http://keyboardcrunch.github.io/posts/email-security/</link>
+      <link>https://keyboardcrunch.github.io/posts/email-security/</link>
       <pubDate>Sat, 30 Jan 2021 14:42:21 -0600</pubDate>
       
-      <guid>http://keyboardcrunch.github.io/posts/email-security/</guid>
+      <guid>https://keyboardcrunch.github.io/posts/email-security/</guid>
       <description>
         
           
@@ -38,10 +38,10 @@ Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender P
     
     <item>
       <title>Going Static</title>
-      <link>http://keyboardcrunch.github.io/posts/going-static/</link>
+      <link>https://keyboardcrunch.github.io/posts/going-static/</link>
       <pubDate>Thu, 28 Jan 2021 17:46:04 -0600</pubDate>
       
-      <guid>http://keyboardcrunch.github.io/posts/going-static/</guid>
+      <guid>https://keyboardcrunch.github.io/posts/going-static/</guid>
       <description>
         
           
