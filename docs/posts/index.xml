@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on keyboardcrunch</title>
+    
+    
+    
+    <link>http://keyboardcrunch.com/posts/</link>
+    <description>Recent content in Posts on keyboardcrunch</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© keyboardcrunch</copyright>
+    <lastBuildDate>Sat, 30 Jan 2021 14:42:21 -0600</lastBuildDate>
+    
+	<atom:link href="http://keyboardcrunch.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Email Security</title>
+      <link>http://keyboardcrunch.com/posts/email-security/</link>
+      <pubDate>Sat, 30 Jan 2021 14:42:21 -0600</pubDate>
+      
+      <guid>http://keyboardcrunch.com/posts/email-security/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          This post started as a quick note for securing email for unused domains but I decided I could expand upon it a bit more to define terms in a language I believe to be more clear than I&amp;rsquo;ve seen elsewhere, and from the view-point of an administrator or domain owner.
+Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Going Static</title>
+      <link>http://keyboardcrunch.com/posts/going-static/</link>
+      <pubDate>Thu, 28 Jan 2021 17:46:04 -0600</pubDate>
+      
+      <guid>http://keyboardcrunch.com/posts/going-static/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          For the last few years I&amp;rsquo;ve been using either Wordpress or (usually) Ghost for my blogs, and self-hosting them. I&amp;rsquo;ve posted a mix of content including home-brewing, fermentation projects, posts describing code projects on my Github, and even rants and reviews. Due to a few failures on my part with backups and migrations, mainly with the images and static content, my blog has ended up missing some content and isn&amp;rsquo;t as clean as I&amp;rsquo;d like it to be.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>
