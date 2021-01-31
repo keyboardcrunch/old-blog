@@ -1,4 +1,4 @@
-baseURL = "http://keyboardcrunch.com/"
+baseURL = "http://keyboardcrunch.github.io/"
 languageCode = "en-us"
 title = "keyboardcrunch"
 theme = "hello-friend"

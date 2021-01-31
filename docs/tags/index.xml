@@ -5,13 +5,13 @@
     
     
     
-    <link>http://keyboardcrunch.com/tags/</link>
+    <link>http://keyboardcrunch.github.io/tags/</link>
     <description>Recent content in Tags on keyboardcrunch</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© keyboardcrunch</copyright>
     
-	<atom:link href="http://keyboardcrunch.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://keyboardcrunch.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
