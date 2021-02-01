@@ -39,7 +39,7 @@ Domain-based Message Authentication, Reporting, and Conformance ([DMARC](https:/
 ```
 hostname    value
 --------    -----
-@           v=DMARC1; p=reject; rua=admin@example.com;
+_dmarc.           v=DMARC1; p=reject; rua=admin@example.com;
 
 ```
 
