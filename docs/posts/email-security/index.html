@@ -200,7 +200,7 @@ Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender P
 <p>Domain-based Message Authentication, Reporting, and Conformance (<a href="https://mxtoolbox.com/dmarc/details/what-is-a-dmarc-record">DMARC</a>) is another method for defining send authority for your domain, but provides control over what happens with authentication fails (quarantine or reject) as well as being able to receive email reports for message failures.</p>
 <pre><code>hostname    value
 --------    -----
-@           v=DMARC1; p=reject; rua=admin@example.com;
+_dmarc.           v=DMARC1; p=reject; rua=mailto:admin@example.com;
 
 </code></pre><h3 id="explanation-1">Explanation</h3>
 <p>The above record ensures that email recipients will <code>reject</code> any emails that fail validation (<code>quarantine</code> or <code>none</code> being the alternatives) and <code>rua</code> (report email address) ensures that each failure is reported to <a href="mailto:admin@example.com">admin@example.com</a>.</p>
@@ -236,6 +236,13 @@ _dmarc.     v=DMARC1; p=reject;
             <hr />
           </div>
           <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="https://keyboardcrunch.github.io/posts/fun-with-wireguard/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Fun With Wireguard</span>
+                </a>
+              </span>
             
             
               <span class="button next">
