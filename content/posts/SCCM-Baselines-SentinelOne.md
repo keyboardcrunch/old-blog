@@ -11,7 +11,7 @@ draft: false
 
 After a recent deployment to upgrade our SentinelOne agents I noticed a few unusual issues with agents; Agents offline in console, unresponsive agent module in Sentinelctl, SentinelAgent Windows service stuck in starting state. This may be specific to my organization's environment, or our deployment method, but may also be due to changes to Anti-Tamper that restrict the use of 3rd party deployment tools through agents 4.6.2 - 4.6.12. On these systems the `SentinelCtl.exe status` command told me everything I needed to know, where the Agent Health and Required Actions categories within the Console didn't reflect any problems. So I set out to create baselines within Microsoft Configuration Manager so that we could keep an eye out for these issues.
 
-_** I feel it's necessary to mention that the issues described above are not a normal occurance, I'd never seen these issues myself with previous agent versions, and that our issues were resolved by either upgrading and rebooting or doing clean installs on systems that had been upgraded using SCCM when Anti-Tamper protection explicitly prevented it (causing corrupted agent installation)._
+_I feel it's necessary to mention that the issues described above are not a normal occurance, I'd never seen these issues myself with previous agent versions, and that our issues were resolved by either upgrading and rebooting or doing clean installs on systems that had been upgraded using SCCM when Anti-Tamper protection explicitly prevented it (causing corrupted agent installation)._
 
 
 
