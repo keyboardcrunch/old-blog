@@ -13,6 +13,7 @@ After a recent deployment to upgrade our SentinelOne agents I noticed a few unus
 
 _I feel it's necessary to mention that the issues described above are not a normal occurance, I'd never seen these issues myself with previous agent versions, and that our issues were resolved by either upgrading and rebooting or doing clean installs on systems that had been upgraded using SCCM when Anti-Tamper protection explicitly prevented it (causing corrupted agent installation)._
 
+_**Update 4/5/2021:** Added a compliance script for [evaluating systems](https://gist.github.com/keyboardcrunch/5da6b14a299c7c78c0699613fe7e27bb) that haven't rebooted since a SentinelOne Agent install or upgrade._
 
 
 ## Creating the Configuration Item
@@ -60,4 +61,6 @@ This step is completely optional, but you can right-click on any baseline deploy
 ## Wrap-up
 I just want to add a final disclaimer that this may be completely unnecessary but I have found it necessary for discovering corrupted agent installs, and it has come in handy in verifying test deployments of agent upgrades as I've noticed (rare) instances of upgraded agents going offline after becoming unresponsive 12hrs-days after upgrade where they just needed to reboot after upgrade.
 
-Additionally, with a little bit of work the above Powershell script could be repurposed to dump granular configuration data with SentinelCtl for validation of Policy Override settings or even Management Connection status.
+Additionally, with a little bit of work the above Powershell script could be repurposed to dump granular configuration data with SentinelCtl for validation of Policy Override settings or even Management Connection status. 
+
+I've also started reviewing my environment for systems that haven't rebooted since SentinelOne Agent upgrade or installs with [this script](https://gist.github.com/keyboardcrunch/5da6b14a299c7c78c0699613fe7e27bb), because there have been instances where these types of systems have been missing EDR data or failed remediation/kill tasks for one reason or another.
