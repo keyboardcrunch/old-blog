@@ -10,10 +10,31 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© keyboardcrunch</copyright>
-    <lastBuildDate>Wed, 31 Mar 2021 19:10:01 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 15 Apr 2021 19:16:38 -0500</lastBuildDate>
     
 	<atom:link href="https://keyboardcrunch.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Recommended SentinelOne Custom Detections</title>
+      <link>https://keyboardcrunch.github.io/posts/recommended-sentinelone-custom-detections/</link>
+      <pubDate>Thu, 15 Apr 2021 19:16:38 -0500</pubDate>
+      
+      <guid>https://keyboardcrunch.github.io/posts/recommended-sentinelone-custom-detections/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Deep Visibility SentinelOne Deep Visibility has a very powerful language for querying on nearly any endpoint activity you&amp;rsquo;d want to dig up. I&amp;rsquo;ve been using the Watchlist feature very heavily; from detecting common phishing Url patterns, unapproved software, insider threats, to LOLBAS activity. But very soon the Watchlist feature will be superseded by Custom Detections, basically Watchlist with ranking and remediation options.
+The purpose of this post is to document a few top priority queries that go beyond the granular queries I&amp;rsquo;ve created and shared before.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>SCCM Baselines for SentinelOne</title>
