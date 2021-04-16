@@ -18,7 +18,7 @@ _I must note that I write a lot of these queries late at night, console up on on
 
 ## Tactics and Techniques
 
-Below I have compiled 8 tactics covering more than 12 techniques (12 queries total), and attempted to document the sub-techniques covered and purpose of the queries. The goal was to add to or fill gaps with SentinelOne detections.
+Below I have compiled 8 techniques covering more than 12 sub-techniques (12 queries total), and attempted to document the sub-techniques covered and purpose of the queries. The goal was to add to or fill gaps with SentinelOne detections.
 
 _I'm aware that the theme for this site changes code blocks to full caps, but copy/paste formatting should be the same. If you experience otherwise please copy these queries from the [markdown copy](https://github.com/keyboardcrunch/keyboardcrunch.github.io/blob/master/content/posts/Recommended-SentinelOne-Custom-Detections.md)._
 
