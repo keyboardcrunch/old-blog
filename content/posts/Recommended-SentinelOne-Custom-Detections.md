@@ -20,16 +20,16 @@ _I must note that I write a lot of these queries late at night, console up on on
 
 Below I have compiled 8 tactics covering more than 12 techniques (12 queries total), and attempted to document the sub-techniques covered and purpose of the queries. The goal was to add to or fill gaps with SentinelOne detections.
 
-_I'm aware that the theme for this site changes code blocks to full caps breaking these queries, so [please use the markdown copy](https://github.com/keyboardcrunch/keyboardcrunch.github.io/blob/master/content/posts/Recommended-SentinelOne-Custom-Detections.md) to copy/paste from, sorry._
+_I'm aware that the theme for this site changes code blocks to full caps, but copy/paste formatting should be the same. If you experience otherwise please copy these queries from the [markdown copy](https://github.com/keyboardcrunch/keyboardcrunch.github.io/blob/master/content/posts/Recommended-SentinelOne-Custom-Detections.md)._
 
-* [T1003 OS Credential Dumping](#T1003-OS-Credential-Dumping)
-* [T1053 Scheduled Task/Job](#T1053-Scheduled-Task/Job)
-* [T1562 Impair Defenses](#T1562-Impair-Defenses)
-* [T1059 Command and Scripting Interpreter](#T1059-Command-and-Scripting-Interpreter)
-* [T1218 Signed Binary Proxy Execution](#T1218-Signed-Binary-Proxy-Execution)
-* [T1482 Domain Trust Discovery](#T1482-domain-trust-discovery)
-* [T1548.002 Abuse Elevation Control Mechanism](#T1548.002-Abuse-Elevation-Control-Mechanism)
-* [T1027.004 Compile After Delivery](#T1027.004-Compile-After-Delivery)
+* [T1003 OS Credential Dumping](#t1003-os-credential-dumping)
+* [T1053 Scheduled Task/Job](#t1053-scheduled-taskjob)
+* [T1562 Impair Defenses](#t1562-impair-defenses)
+* [T1059 Command and Scripting Interpreter](#t1059-command-and-scripting-interpreter)
+* [T1218 Signed Binary Proxy Execution](#t1218-signed-binary-proxy-execution)
+* [T1482 Domain Trust Discovery](#t1482-domain-trust-discovery)
+* [T1548.002 Abuse Elevation Control Mechanism](#t1548002-abuse-elevation-control-mechanism)
+* [T1027.004 Compile After Delivery](#t1027004-compile-after-delivery)
 
 
 
