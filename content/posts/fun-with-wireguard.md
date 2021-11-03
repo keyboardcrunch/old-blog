@@ -1,6 +1,7 @@
 ---
 title: "Fun With Wireguard"
 date: 2021-03-30T21:12:25-05:00
+lastmod: 2021-11-03T21:12:25-05:00
 draft: false
 
 # HelloFriend Specific
@@ -34,6 +35,9 @@ or ZeroTier that can create a secure networks with minimal management overhead.
 ### Tailscale
 [Tailscale](https://tailscale.com/) is a zero config VPN with firewall rule management, allowing 
 for a secure network layer on top of existing infrastructure.
+
+### Firezone
+[Firezone](https://github.com/firezone/firezone) is a Linux package to manage your WireGuard VPN and Linux firewall from a simple web interface.
 
 ### PiVPN
 [PiVPN](https://www.pivpn.io/) is an absolutely simple deployment and management script for 
