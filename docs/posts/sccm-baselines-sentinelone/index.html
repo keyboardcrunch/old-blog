@@ -181,28 +181,28 @@
 <p><em><strong>Update 4/5/2021:</strong> Added a compliance script for <a href="https://gist.github.com/keyboardcrunch/5da6b14a299c7c78c0699613fe7e27bb">evaluating systems</a> that haven&rsquo;t rebooted since a SentinelOne Agent install or upgrade.</em></p>
 <h2 id="creating-the-configuration-item">Creating the Configuration Item</h2>
 <h3 id="step-1---create-the-ci">Step 1 - Create the CI</h3>
-<p><img src="/SCCM_Baseline_For_SentinelOne/CI_1_New_CI.png" alt="New Compliance Item"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/CI_1_New_CI.png" alt="New Compliance Item"></p>
 <h3 id="step-2---create-a-new-setting">Step 2 - Create a New Setting</h3>
-<p><img src="/SCCM_Baseline_For_SentinelOne/CI_2_New_Setting.png" alt="New CI Setting"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/CI_2_New_Setting.png" alt="New CI Setting"></p>
 <h3 id="step-3---edit-the-discovery-script">Step 3 - Edit the Discovery Script</h3>
 <p>Next step is to edit the Discovery Script. My method was to detect the installed version of SentinelOne by enumerating the Win32Reg_AddRemovePrograms WMI object so we know the execution path for SentinelCtl for running the <code>./SentinelCtl.exe status</code> command, where we then parse the output. <em>You may want to uncomment the final block validating tamper protection. I had it turned off for an SCCM deployment and to make repairing corrupted installs a bit easier.</em></p>
 <p>You can find my Powershell script <a href="https://gist.github.com/keyboardcrunch/6c2451815eb48c42bc3efbc01a809a9d">here</a>.</p>
-<p><img src="/SCCM_Baseline_For_SentinelOne/CI_3_Settings_Edit_Discovery_Script.png" alt="Edit Discovery Script"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/CI_3_Settings_Edit_Discovery_Script.png" alt="Edit Discovery Script"></p>
 <h3 id="step-4---new-compliance-rule">Step 4 - New Compliance Rule</h3>
 <p>The rule evaluates the data returned from the script, and the script is returning a simple Boolean value for overall compliance (It isn&rsquo;t telling you which component is out of compliance).</p>
-<p><img src="/SCCM_Baseline_For_SentinelOne/CI_4_Settings_New_Compliance_Rule.png" alt="New Compliance Rule"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/CI_4_Settings_New_Compliance_Rule.png" alt="New Compliance Rule"></p>
 <h2 id="creating-the-configuration-baseline">Creating the Configuration Baseline</h2>
 <h3 id="step-1---create-a-new-baseline">Step 1 - Create a New Baseline</h3>
-<p><img src="/SCCM_Baseline_For_SentinelOne/BL_1_New_Baseline.png" alt="Edit Discovery Script"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/BL_1_New_Baseline.png" alt="Edit Discovery Script"></p>
 <h3 id="step-2---add-the-previous-configuration-item">Step 2 - Add the Previous Configuration Item</h3>
 <p>Here we&rsquo;re just adding the previously created Configuration Item to tell the Baseline what to evaluate.</p>
-<p><img src="/SCCM_Baseline_For_SentinelOne/BL_2_Add_CI_For_Eval.png" alt="Add Configuration Item"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/BL_2_Add_CI_For_Eval.png" alt="Add Configuration Item"></p>
 <h3 id="step-3---deploy-the-baseline">Step 3 - Deploy the Baseline</h3>
 <p>This will look different when created through the wizard workflow, but in this step you&rsquo;re just creating a deployment to any device collection you wish. I have a separate collection for devices missing the SentinelOne agent, so I&rsquo;m only deploying this baseline to a collection of systems with SentinelOne installed, running evaluation every 6 hours (personal preference), and in Monitor mode since remediation would be too complex to automate with anti-tamper and per-agent passwords.</p>
-<p><img src="/SCCM_Baseline_For_SentinelOne/BL_3_Deploy_Settings.png" alt="Deploy the Baseline"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/BL_3_Deploy_Settings.png" alt="Deploy the Baseline"></p>
 <h4 id="step-4---create-a-non-compliant-collection-optional">Step 4 - Create a Non-Compliant Collection (optional)</h4>
 <p>This step is completely optional, but you can right-click on any baseline deployment and create a collection of Non-Compliant systems (and it will refresh depending on the collection settings). This is useful for reporting, but you could always review results from the Monitoring tab of SCCM.</p>
-<p><img src="/SCCM_Baseline_For_SentinelOne/BL_4_Create_Collection_From_NonCompliant.png" alt="Edit Discovery Script"></p>
+<p><img src="/uploads/SCCM_Baseline_For_SentinelOne/BL_4_Create_Collection_From_NonCompliant.png" alt="Edit Discovery Script"></p>
 <h2 id="wrap-up">Wrap-up</h2>
 <p>I just want to add a final disclaimer that this may be completely unnecessary but I have found it necessary for discovering corrupted agent installs, and it has come in handy in verifying test deployments of agent upgrades as I&rsquo;ve noticed (rare) instances of upgraded agents going offline after becoming unresponsive 12hrs-days after upgrade where they just needed to reboot after upgrade.</p>
 <p>Additionally, with a little bit of work the above Powershell script could be repurposed to dump granular configuration data with SentinelCtl for validation of Policy Override settings or even Management Connection status.</p>

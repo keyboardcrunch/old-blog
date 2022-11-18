@@ -18,44 +18,44 @@ _**Update 4/5/2021:** Added a compliance script for [evaluating systems](https:/
 
 ## Creating the Configuration Item
 ### Step 1 - Create the CI
-![New Compliance Item](/SCCM_Baseline_For_SentinelOne/CI_1_New_CI.png)
+![New Compliance Item](/uploads/SCCM_Baseline_For_SentinelOne/CI_1_New_CI.png)
 
 ### Step 2 - Create a New Setting
-![New CI Setting](/SCCM_Baseline_For_SentinelOne/CI_2_New_Setting.png)
+![New CI Setting](/uploads/SCCM_Baseline_For_SentinelOne/CI_2_New_Setting.png)
 
 ### Step 3 - Edit the Discovery Script
 Next step is to edit the Discovery Script. My method was to detect the installed version of SentinelOne by enumerating the Win32Reg_AddRemovePrograms WMI object so we know the execution path for SentinelCtl for running the `./SentinelCtl.exe status` command, where we then parse the output. _You may want to uncomment the final block validating tamper protection. I had it turned off for an SCCM deployment and to make repairing corrupted installs a bit easier._
 
 You can find my Powershell script [here](https://gist.github.com/keyboardcrunch/6c2451815eb48c42bc3efbc01a809a9d).
 
-![Edit Discovery Script](/SCCM_Baseline_For_SentinelOne/CI_3_Settings_Edit_Discovery_Script.png)
+![Edit Discovery Script](/uploads/SCCM_Baseline_For_SentinelOne/CI_3_Settings_Edit_Discovery_Script.png)
 
 ### Step 4 - New Compliance Rule
 The rule evaluates the data returned from the script, and the script is returning a simple Boolean value for overall compliance (It isn't telling you which component is out of compliance).
 
-![New Compliance Rule](/SCCM_Baseline_For_SentinelOne/CI_4_Settings_New_Compliance_Rule.png)
+![New Compliance Rule](/uploads/SCCM_Baseline_For_SentinelOne/CI_4_Settings_New_Compliance_Rule.png)
 
 
 
 ## Creating the Configuration Baseline 
 
 ### Step 1 - Create a New Baseline
-![Edit Discovery Script](/SCCM_Baseline_For_SentinelOne/BL_1_New_Baseline.png)
+![Edit Discovery Script](/uploads/SCCM_Baseline_For_SentinelOne/BL_1_New_Baseline.png)
 
 ### Step 2 - Add the Previous Configuration Item
 Here we're just adding the previously created Configuration Item to tell the Baseline what to evaluate.
 
-![Add Configuration Item](/SCCM_Baseline_For_SentinelOne/BL_2_Add_CI_For_Eval.png)
+![Add Configuration Item](/uploads/SCCM_Baseline_For_SentinelOne/BL_2_Add_CI_For_Eval.png)
 
 ### Step 3 - Deploy the Baseline
 This will look different when created through the wizard workflow, but in this step you're just creating a deployment to any device collection you wish. I have a separate collection for devices missing the SentinelOne agent, so I'm only deploying this baseline to a collection of systems with SentinelOne installed, running evaluation every 6 hours (personal preference), and in Monitor mode since remediation would be too complex to automate with anti-tamper and per-agent passwords.
 
-![Deploy the Baseline](/SCCM_Baseline_For_SentinelOne/BL_3_Deploy_Settings.png)
+![Deploy the Baseline](/uploads/SCCM_Baseline_For_SentinelOne/BL_3_Deploy_Settings.png)
 
 #### Step 4 - Create a Non-Compliant Collection (optional)
 This step is completely optional, but you can right-click on any baseline deployment and create a collection of Non-Compliant systems (and it will refresh depending on the collection settings). This is useful for reporting, but you could always review results from the Monitoring tab of SCCM.
 
-![Edit Discovery Script](/SCCM_Baseline_For_SentinelOne/BL_4_Create_Collection_From_NonCompliant.png)
+![Edit Discovery Script](/uploads/SCCM_Baseline_For_SentinelOne/BL_4_Create_Collection_From_NonCompliant.png)
 
 
 ## Wrap-up

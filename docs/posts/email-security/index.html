@@ -192,14 +192,14 @@ Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender P
 <p>Sender Policy Framework (<a href="https://www.dmarcanalyzer.com/spf/">SPF</a>) is a method for defining domains or ips that are allowed to send email for your domain. When an email server recieves an email from your domain it will check for SPF records for your domain to confirm that the sender was authorized.</p>
 <p>SPF records are often used to prevent anyone from spoofing emails from your domain, while allowing specific services to send emails on your behalf (think marketing services, zendesk, salesforce).</p>
 <h3 id="example">Example</h3>
-<pre><code>hostname    value
+<pre tabindex="0"><code>hostname    value
 --------    -----
 @           v=spf1 ip4:182.4.35.44 include:3rdpartymail.com -all
 </code></pre><h3 id="explanation">Explanation</h3>
 <p>Since SPF records are just text records defined for the root of the domain, they are defined with <code>v=sfp1</code> (v as in variable). <code>ip4</code> and <code>include:</code> are fairly straight forward just approved senders. The <code>all</code> flag defines how failures happen; <code>-all</code> is a &lsquo;hard&rsquo; failure to reject failures, <code>~all</code> is a &lsquo;softfail&rsquo; allowing emails to be accepted but flagged.</p>
 <h2 id="dmarc">DMARC</h2>
 <p>Domain-based Message Authentication, Reporting, and Conformance (<a href="https://mxtoolbox.com/dmarc/details/what-is-a-dmarc-record">DMARC</a>) is another method for defining send authority for your domain, but provides control over what happens with authentication fails (quarantine or reject) as well as being able to receive email reports for message failures.</p>
-<pre><code>hostname    value
+<pre tabindex="0"><code>hostname    value
 --------    -----
 _dmarc.           v=DMARC1; p=reject; rua=mailto:admin@example.com;
 
@@ -207,14 +207,14 @@ _dmarc.           v=DMARC1; p=reject; rua=mailto:admin@example.com;
 <p>The above record ensures that email recipients will <code>reject</code> any emails that fail validation (<code>quarantine</code> or <code>none</code> being the alternatives) and <code>rua</code> (report email address) ensures that each failure is reported to <a href="mailto:admin@example.com">admin@example.com</a>.</p>
 <h2 id="dkim">DKIM</h2>
 <p>Domain Keys Identified Mail (<a href="https://postmarkapp.com/guides/dkim">DKIM</a>) provides further sender authentication to your domain through the use of public-key cryptography. When you send an email from your domain, the email will be signed by your server, and when the receiving server gets your email it will validate the signed email using the public key defined in your domain&rsquo;s DKIM TXT record. <em>This signing method isn&rsquo;t used for encrypting your messages, only domain sender verification</em>.</p>
-<pre><code>hostname                            value
+<pre tabindex="0"><code>hostname                            value
 --------                            -----
 specific._domainkey.domain.com      v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCS
 </code></pre><h3 id="explanation-2">Explanation</h3>
 <p>In the above, the hostname is specific to the configuration of DKIM for your domain, and the <code>_domainkey</code> is required for discovery. As before, <code>v</code> defines the TXT value as DKIM version 1. <code>k</code> is short for key, defined above as an RSA key. <code>p</code> is the RSA public key contents (the above was truncated for brevity).</p>
 <h2 id="securing-unused-domains">Securing Unused Domains</h2>
 <p>If you&rsquo;re a hoarder of domains like I am, you&rsquo;ll often have domains with no custom records or default registrar records. Neither of which are particularly protected from spam and phishing attackers. Below I document the bare minimum for preventing spam or phishing using your domain.</p>
-<pre><code>hostname    value
+<pre tabindex="0"><code>hostname    value
 --------    -----
 @           v=spf1 -all
 _dmarc.     v=DMARC1; p=reject;

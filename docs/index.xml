@@ -10,10 +10,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© keyboardcrunch</copyright>
-    <lastBuildDate>Thu, 15 Apr 2021 19:16:38 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 17 Nov 2022 16:07:01 -0600</lastBuildDate>
     
 	<atom:link href="https://keyboardcrunch.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>VMRay Guest Performance</title>
+      <link>https://keyboardcrunch.github.io/posts/vmray-guest-performance/</link>
+      <pubDate>Thu, 17 Nov 2022 16:07:01 -0600</pubDate>
+      
+      <guid>https://keyboardcrunch.github.io/posts/vmray-guest-performance/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
+It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>Hacking a Better SentinelOne</title>
+      <link>https://keyboardcrunch.github.io/posts/hacking_a_better_sentinelone/</link>
+      <pubDate>Sat, 26 Mar 2022 12:43:36 -0500</pubDate>
+      
+      <guid>https://keyboardcrunch.github.io/posts/hacking_a_better_sentinelone/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          One of my few frustrations with modern EDR tooling are that most all of them have thrown out one of the most useful features of the legacy anti-virus, scanning of USB drives. They&amp;rsquo;re a vector for malicious files onto the network, files that could migrate to other places in your network before they&amp;rsquo;re ever analyzed, and this can possibly be an issue with compliance regulations (or at least a frustrated CISO as I experienced).
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Recommended SentinelOne Custom Detections</title>

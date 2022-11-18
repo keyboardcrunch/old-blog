@@ -16,9 +16,9 @@ Within the SentinelOne /docs we can see that the Sentinel Agent implements a COM
 
 ### James Forshaw's OleView
 Since we know the Program ID to investigate, [OleView](https://github.com/tyranid/oleviewdotnet) is a good place to start. We start by navigating to the "Prog IDs" section under the Registry menu. The documentation references `SentinelAgent.1`, so let's start by opening the Type Library of ISentinelAgent (as it's the most obvious).
-![OleView SentinelAgent.1](../../static/hacking_better_sentinelone/OleView_SentinelAgent1.png)
+![OleView SentinelAgent.1](/uploads/hacking_better_sentinelone/OleView_SentinelAgent1.png)
 
-![OleView SentinelAgentLibrary](../../static/hacking_better_sentinelone/OleView_DSentinelAgentEvents.png)
+![OleView SentinelAgentLibrary](/uploads/hacking_better_sentinelone/OleView_DSentinelAgentEvents.png)
 
 
 ### Prototyping Some Code
@@ -73,7 +73,7 @@ So now we have some basic code that will run and wait for a USB device connectio
 
 My first swing at this uses yet more Sentinel COM hackery, as I know that `SentinelHelper.1` has a `GetAgentStatusJSON` method that will return a bunch of information about the agent. The downside, it requires administrative priviledges, so we'll need to find a better method later.
 
-![OleView SentinelHelper](../../static/hacking_better_sentinelone/OleView_ISentinelHelper.png)
+![OleView SentinelHelper](/uploads/hacking_better_sentinelone/OleView_ISentinelHelper.png)
 
 We really just want the full path to the SentinelCtl.exe binary, so we need to grab the currently installed agent version to know the path. And since we have the device drive/mount path as the `device` variable, we can just mock up the full execution of the scan. It's good to test this to see if we'll have any pop-up from the agent for these scans.
 
