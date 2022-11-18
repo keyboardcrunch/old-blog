@@ -37,6 +37,27 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
     </item>
     
     <item>
+      <title>Finding Some Inspiration</title>
+      <link>https://keyboardcrunch.github.io/posts/finding-some-inspiration/</link>
+      <pubDate>Fri, 11 Nov 2022 18:28:44 -0600</pubDate>
+      
+      <guid>https://keyboardcrunch.github.io/posts/finding-some-inspiration/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          It&amp;rsquo;s been a few years since I&amp;rsquo;d actively used Mastodon but with the recent flood of users to the fediverse I figured I&amp;rsquo;d give it another shot, this time creating a profile on fosstodon. While this isn&amp;rsquo;t a post about Mastodon I found a ton of inspiration seeing so many creative folks doing interesting things.
+Simon Willison&amp;hellip; I love the format of his GitHub readme, the live updates of Github activity, blog posts, and TIL&amp;rsquo;s, and the TILs!
+          
+        
+        </description>
+    </item>
+    
+    <item>
       <title>Hacking a Better SentinelOne</title>
       <link>https://keyboardcrunch.github.io/posts/hacking_a_better_sentinelone/</link>
       <pubDate>Sat, 26 Mar 2022 12:43:36 -0500</pubDate>

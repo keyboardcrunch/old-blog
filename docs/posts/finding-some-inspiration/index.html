@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        VMRay Guest Performance ::
+        Finding Some Inspiration ::
         keyboardcrunch — Tech stuff from keyboardcrunch
       </title>
     
@@ -11,15 +11,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned."
+  content="It&amp;rsquo;s been a few years since I&amp;rsquo;d actively used Mastodon but with the recent flood of users to the fediverse I figured I&amp;rsquo;d give it another shot, this time creating a profile on fosstodon. While this isn&amp;rsquo;t a post about Mastodon I found a ton of inspiration seeing so many creative folks doing interesting things.
+Simon Willison&amp;hellip; I love the format of his GitHub readme, the live updates of Github activity, blog posts, and TIL&amp;rsquo;s, and the TILs!"
 />
 <meta
   name="keywords"
   content="blog, personal, tech"
 />
 <meta name="robots" content="noodp" />
-<link rel="canonical" href="https://keyboardcrunch.github.io/posts/vmray-guest-performance/" />
+<link rel="canonical" href="https://keyboardcrunch.github.io/posts/finding-some-inspiration/" />
 
 
 
@@ -47,19 +47,19 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="VMRay Guest Performance"/>
-<meta name="twitter:description" content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned."/>
+<meta name="twitter:title" content="Finding Some Inspiration"/>
+<meta name="twitter:description" content="It&rsquo;s been a few years since I&rsquo;d actively used Mastodon but with the recent flood of users to the fediverse I figured I&rsquo;d give it another shot, this time creating a profile on fosstodon. While this isn&rsquo;t a post about Mastodon I found a ton of inspiration seeing so many creative folks doing interesting things.
+Simon Willison&hellip; I love the format of his GitHub readme, the live updates of Github activity, blog posts, and TIL&rsquo;s, and the TILs!"/>
 
 
 
-<meta property="og:title" content="VMRay Guest Performance" />
-<meta property="og:description" content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned." />
+<meta property="og:title" content="Finding Some Inspiration" />
+<meta property="og:description" content="It&rsquo;s been a few years since I&rsquo;d actively used Mastodon but with the recent flood of users to the fediverse I figured I&rsquo;d give it another shot, this time creating a profile on fosstodon. While this isn&rsquo;t a post about Mastodon I found a ton of inspiration seeing so many creative folks doing interesting things.
+Simon Willison&hellip; I love the format of his GitHub readme, the live updates of Github activity, blog posts, and TIL&rsquo;s, and the TILs!" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://keyboardcrunch.github.io/posts/vmray-guest-performance/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-11-17T16:07:01-06:00" />
-<meta property="article:modified_time" content="2022-11-17T16:07:01-06:00" /><meta property="og:site_name" content="keyboardcrunch" />
+<meta property="og:url" content="https://keyboardcrunch.github.io/posts/finding-some-inspiration/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-11T18:28:44-06:00" />
+<meta property="article:modified_time" content="2022-11-11T18:28:44-06:00" /><meta property="og:site_name" content="keyboardcrunch" />
 
 
 
@@ -155,11 +155,11 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
   
 
   <div class="post">
-    <h1 class="post-title">VMRay Guest Performance</h1>
+    <h1 class="post-title">Finding Some Inspiration</h1>
     <div class="post-meta">
       
         <span class="post-date">
-          2022-11-17
+          2022-11-11
         </span>
 
         
@@ -179,19 +179,13 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
 
     <div class="post-content">
       
-      <p>I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.</p>
-<p>It appears that the default is <code>-smp 1</code>, meaning one vCPU socket/core is assigned. To view how many CPU cores your host machine has available you can run <code>nproc</code> to get the value. So to have a 4 core system we just need to configure the guest to use the qemu argument <code>-smp 4</code>.</p>
-<p>If you&rsquo;re creating a new virtual machine then VMRay provides some configuration options with <code>vm_setup.py</code> most of it is hardware emulation, disk and memory size, with the final option to pass some qemu arguments. If you&rsquo;re trying increase CPU resources on the machines after the fact you follow the below steps, in our example we&rsquo;ll tell VMRay to launch the machine with 2 sockets and 4 cores (note that if you do define socket/cores then you need to use the maxcpus value as well).</p>
-<ol>
-<li><code>sudo /opt/vmray/bin/vm_setup.py</code></li>
-<li>Select 2, VM Operations</li>
-<li>Select 8, Change hardware info of existing VM</li>
-<li>Select your virtual machine</li>
-<li>Select 10, Miscellaneous settings</li>
-<li>Select 1, Additional QEMU command line (current value: )</li>
-<li>Enter <code>-smp 4,cores=4,sockets=2,threads=1,maxcpus=8</code></li>
-</ol>
-<p>Your guests will now have much more resources, and the core count will reflect in the guest. Now, this may break some of the virtualization countermeasures but I&rsquo;d rather have a usable analysis machine. You can read more about this setting in the <a href="https://www.qemu.org/docs/master/system/qemu-manpage.html">qemu manpage</a>.</p>
+      <p>It&rsquo;s been a few years since I&rsquo;d actively used Mastodon but with the recent flood of users to the fediverse I figured I&rsquo;d give it another shot, this time creating a profile on fosstodon. While this isn&rsquo;t a post about Mastodon I found a ton of inspiration seeing so many creative folks doing interesting things.</p>
+<p>Simon Willison&hellip; I love the format of his <a href="https://github.com/simonw/">GitHub readme</a>, the live updates of Github activity, blog posts, and TIL&rsquo;s, and the TILs!!! I&rsquo;d been thinking about using ActivityPub/Plermo/Mastodon to essentially micro-blog short bits of things I learned to track them like notes on a public scale but <a href="https://github.com/simonw/til">TIL</a> is awesome! My approach I decided to take a bit differently, at least until I can figure out how I want to post my TIL items. I have a <a href="https://github.com/go-shiori/shiori">Shiori</a> bookmark server (which has a very very limited and goofy API that only returns 30 items, no pagination, no filters) so it&rsquo;s like a &ldquo;what I&rsquo;m reading&rdquo; feed. So with some Python and Flask, ripping a free HTML5 template off the interwebz, and putting together a single page site that lists GitHub activity, Blog Posts, and Bookmarks/Recently Read. I wanted this to be hosted on DigitalOcean as a web function but it needs clean-up and performance tweaks before I can get there, but it&rsquo;s working and running on <a href="https://keyboardcrunch.com/">keyboardcrunch.com</a>.</p>
+<video class="video-shortcode" preload="auto" width="720" height="480" controls>
+    <source src="/uploads/finding-some-inspiration/site_preview.mp4" type="video/mp4">
+    There should have been a video here but your browser does not seem
+    to support it.
+</video>
 
     </div>
     
@@ -205,10 +199,17 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
           </div>
           <div class="pagination__buttons">
             
+              <span class="button previous">
+                <a href="https://keyboardcrunch.github.io/posts/vmray-guest-performance/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">VMRay Guest Performance</span>
+                </a>
+              </span>
+            
             
               <span class="button next">
-                <a href="https://keyboardcrunch.github.io/posts/finding-some-inspiration/">
-                  <span class="button__text">Finding Some Inspiration</span>
+                <a href="https://keyboardcrunch.github.io/posts/hacking_a_better_sentinelone/">
+                  <span class="button__text">Hacking a Better SentinelOne</span>
                   <span class="button__icon">→</span>
                 </a>
               </span>
