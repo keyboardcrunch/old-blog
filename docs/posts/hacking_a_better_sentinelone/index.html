@@ -63,7 +63,6 @@
 
 
 
-
   </head>
   <body class="dark-theme">
     <div class="container">
@@ -196,29 +195,29 @@ class AgentEvents:
         device_event = json.loads(event)
         print(json.dumps(device_event), indent=4, sort_keys=True) # print the event
 
-agent = win32com.client.DispatchWithEvents(&quot;SentinelAgent.1&quot;, AgentEvents)
+agent = win32com.client.DispatchWithEvents(&#34;SentinelAgent.1&#34;, AgentEvents)
 pythoncom.PumpMessages()
 </code></pre><p>Below are the results we get for a USB connection.</p>
 <pre tabindex="0"><code>{
-    &quot;deviceClass&quot;: 8,
-    &quot;deviceName&quot;: &quot;SanDisk Cruzer Blade&quot;,
-    &quot;eventId&quot;: &quot;{96e5a854-abb7-11ec-ba75-000c29ad0249}&quot;,
-    &quot;eventType&quot;: &quot;connected&quot;,
-    &quot;interface&quot;: &quot;USB&quot;,
-    &quot;productId&quot;: 21863,
-    &quot;ruleId&quot;: &quot;-1&quot;,
-    &quot;serialId&quot;: &quot;4C530110050104113372&quot;,
-    &quot;timestamp&quot;: &quot;2022-03-24T21:19:00.894+00:00&quot;,
-    &quot;vendorId&quot;: 1921
+    &#34;deviceClass&#34;: 8,
+    &#34;deviceName&#34;: &#34;SanDisk Cruzer Blade&#34;,
+    &#34;eventId&#34;: &#34;{96e5a854-abb7-11ec-ba75-000c29ad0249}&#34;,
+    &#34;eventType&#34;: &#34;connected&#34;,
+    &#34;interface&#34;: &#34;USB&#34;,
+    &#34;productId&#34;: 21863,
+    &#34;ruleId&#34;: &#34;-1&#34;,
+    &#34;serialId&#34;: &#34;4C530110050104113372&#34;,
+    &#34;timestamp&#34;: &#34;2022-03-24T21:19:00.894+00:00&#34;,
+    &#34;vendorId&#34;: 1921
 }
 </code></pre><p>A little unfortunate that it doesn&rsquo;t contain the drive letter or mount path, but we can at least piggyback off this connection event, and we can see a way forward for filtering on events to just Class=8 (mass storage) and Type=connected; we could even filter out trusted USB devices by <code>serialId</code> if we wanted to.</p>
 <p>Let&rsquo;s add <code>win32file</code> to our imports and just do a bit of drive enumeration.</p>
-<pre tabindex="0"><code>if device_event[&quot;eventType&quot;] == &quot;connected&quot; and device_event[&quot;deviceClass&quot;] == 8:
-    drives = win32api.GetLogicalDriveStrings().split('\x00')[:-1]
+<pre tabindex="0"><code>if device_event[&#34;eventType&#34;] == &#34;connected&#34; and device_event[&#34;deviceClass&#34;] == 8:
+    drives = win32api.GetLogicalDriveStrings().split(&#39;\x00&#39;)[:-1]
     for device in drives:
         drive_type = win32file.GetDriveType(device)
         if drive_type == win32file.DRIVE_REMOVABLE:
-            print(&quot;We need to scan the %s drive&quot;, device)
+            print(&#34;We need to scan the %s drive&#34;, device)
 </code></pre><h3 id="scanning-the-drive">Scanning the Drive</h3>
 <p>So now we have some basic code that will run and wait for a USB device connection, if it&rsquo;s a &lsquo;connected&rsquo; event for a removable storage drive it&rsquo;ll print out <em>&ldquo;We need to scan the X:\ drive&rdquo;</em>. So let&rsquo;s figure out how we&rsquo;ll trigger the scan. We know we can scan files or folders using SentinelCtl commands (we are good SentinelOne administrators), and with a bit of testing we can confirm that it doesn&rsquo;t require administrative priviledges to initiate a scan, so our problem is locating the binary.</p>
 <p>My first swing at this uses yet more Sentinel COM hackery, as I know that <code>SentinelHelper.1</code> has a <code>GetAgentStatusJSON</code> method that will return a bunch of information about the agent. The downside, it requires administrative priviledges, so we&rsquo;ll need to find a better method later.</p>
@@ -229,12 +228,12 @@ import win32file
 import subprocess
 
 # Find the running agent version and craft full path for SentinelCtl.exe
-agent_com = win32com.client.Dispatch(&quot;SentinelHelper.1&quot;).GetAgentStatusJSON()
+agent_com = win32com.client.Dispatch(&#34;SentinelHelper.1&#34;).GetAgentStatusJSON()
 agent_info = json.loads(agent_com)
-sentinelctl = &quot;C:\Program Files\SentinelOne\Sentinel Agent %s\SentinelCtl.exe&quot; % agent_info[&quot;agent-version&quot;]
+sentinelctl = &#34;C:\Program Files\SentinelOne\Sentinel Agent %s\SentinelCtl.exe&#34; % agent_info[&#34;agent-version&#34;]
 
 # Execute SentinelCtl.exe scan_folder -i device
-scan_status = subprocess.run([sentinelctl, 'scan_folder', '-i', device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+scan_status = subprocess.run([sentinelctl, &#39;scan_folder&#39;, &#39;-i&#39;, device], stdout=subprocess.PIPE).stdout.decode(&#39;utf-8&#39;)
 </code></pre><p>Testing this I saw no pop-ups or activity from the tray icon, and the scan_status simply states that the scan was initiated. So what if a scan was already running, well&hellip; sadly a new scan request will fail, but SentinelCtl provides a <code>is_scan_in_process</code> command that will state <em>&ldquo;Scan is in progress&rdquo;</em> if one is already going, so maybe our end code should kill any running scans?</p>
 <h3 id="the-prototype">The Prototype</h3>
 <p>With the above code we can successfully monitor for new USB mass storage devices being connected, and initiate a scan with SentinelCtl on that drive, while handling some specific behavior regarding running scans. <a href="https://github.com/keyboardcrunch/sentinelone_usbscan/blob/main/usbscan.py">usbscan.py</a> is just a quick proof of concept, but I&rsquo;ve thrown in some logging and the ability to run completely without any administrative priviledges. I won&rsquo;t cover it here, but next steps are to compile and sign a Windows binary and install it as a low priviledged service.</p>

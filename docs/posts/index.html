@@ -58,7 +58,6 @@
 
 
 
-
 <link rel="alternate" type="application/rss+xml" href="/posts/index.xml" title="keyboardcrunch" />
 
 
@@ -172,8 +171,7 @@
         <div class="post-content">
           
             
-              I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
+              Warning At this time VMRay doesn&rsquo;t officially support changing the CPU, they don&rsquo;t seem to plan on supporting it, and they won&rsquo;t help you to get it working. As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it&rsquo;ll fail.
             
           
         </div>
@@ -392,7 +390,7 @@ The purpose of this post is to document a few top priority queries that go beyon
           
             
               This post started as a quick note for securing email for unused domains but I decided I could expand upon it a bit more to define terms in a language I believe to be more clear than I&rsquo;ve seen elsewhere, and from the view-point of an administrator or domain owner.
-Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain.
+Index SPF DMARC DKIM Securing Unused Domains Additional Resources SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain.
             
           
         </div>

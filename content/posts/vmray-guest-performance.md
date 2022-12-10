@@ -9,6 +9,12 @@ draft: false
 #description = "description"
 ---
 
+## Warning
+At this time VMRay doesn't officially support changing the CPU, they don't seem to plan on supporting it, and they won't help you to get it working.
+As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it'll fail. The failure makes it look like a driver issue, but I haven't found a workaround and lost interest after working with support.
+
+## The Original Post
+
 I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
 
 It appears that the default is `-smp 1`, meaning one vCPU socket/core is assigned. To view how many CPU cores your host machine has available you can run `nproc` to get the value. So to have a 4 core system we just need to configure the guest to use the qemu argument `-smp 4`.

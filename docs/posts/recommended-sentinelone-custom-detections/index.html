@@ -66,7 +66,6 @@ The purpose of this post is to document a few top priority queries that go beyon
 
 
 
-
   </head>
   <body class="dark-theme">
     <div class="container">
@@ -203,9 +202,9 @@ The purpose of this post is to document a few top priority queries that go beyon
 <p><strong>Sub-Techniques:</strong> T1003.001 LSASS Memory, T1003.003 NTDS</p>
 <p><strong>Description:</strong> Credential theft being the ultimate goal before moving on to lateral movement, the below sub-techniques are commonly observed by actors and go beyond the general detections.</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>( TgtProcImageSha1 = &quot;f0c52cea19c204f5cdbe952cc7cfc182e20d8d43&quot; OR TgtProcCmdline ContainsCIS &quot;-ma lsass.exe&quot; OR TgtProcCmdline RegExp &quot;(?i)comsvcs.dl.*(minidump)&quot; OR TgtFilePath = &quot;C:\Windows\Temp\dumpert.dmp&quot; OR TgtFilePath RegExp &quot;^.*lsass.*.DMP&quot; OR (SrcProcCmdline ContainsCIS &quot;sekurlsa::minidump&quot; OR SrcProcCmdline ContainsCIS &quot;sekurlsa::logonpasswords&quot;) OR SrcProcCmdline ContainsCIS &quot;live lsa&quot; )
+<pre tabindex="0"><code>( TgtProcImageSha1 = &#34;f0c52cea19c204f5cdbe952cc7cfc182e20d8d43&#34; OR TgtProcCmdline ContainsCIS &#34;-ma lsass.exe&#34; OR TgtProcCmdline RegExp &#34;(?i)comsvcs.dl.*(minidump)&#34; OR TgtFilePath = &#34;C:\Windows\Temp\dumpert.dmp&#34; OR TgtFilePath RegExp &#34;^.*lsass.*.DMP&#34; OR (SrcProcCmdline ContainsCIS &#34;sekurlsa::minidump&#34; OR SrcProcCmdline ContainsCIS &#34;sekurlsa::logonpasswords&#34;) OR SrcProcCmdline ContainsCIS &#34;live lsa&#34; )
 OR
-( SrcProcCmdline RegExp &quot;^.*copy.*\\Windows\\NTDS\\NTDS.dit.*&quot; OR SrcProcCmdline RegExp &quot;^.*copy.*\\Windows\\System32\\config\\SYSTEM .*&quot; OR SrcProcCmdline ContainsCIS &quot;save HKLM\SYSTEM&quot; OR (TgtProcName = &quot;ntdsutil.exe&quot; AND TgtProcCmdline ContainsCIS &quot;ac i ntds&quot;) )
+( SrcProcCmdline RegExp &#34;^.*copy.*\\Windows\\NTDS\\NTDS.dit.*&#34; OR SrcProcCmdline RegExp &#34;^.*copy.*\\Windows\\System32\\config\\SYSTEM .*&#34; OR SrcProcCmdline ContainsCIS &#34;save HKLM\SYSTEM&#34; OR (TgtProcName = &#34;ntdsutil.exe&#34; AND TgtProcCmdline ContainsCIS &#34;ac i ntds&#34;) )
 </code></pre><h3 id="t1053-scheduled-taskjob">T1053 Scheduled Task/Job</h3>
 <p><strong>Tactic:</strong>  Execution, Persistence, Privilege Escalation</p>
 <p><strong>Platforms:</strong> Windows</p>
@@ -213,9 +212,9 @@ OR
 <p><strong>Sub-Techniques:</strong> T1053.002 Windows AT, T1053.005 Scheduled Task</p>
 <p><strong>Description:</strong> Common in the persistence stage of attacks is the scheduling of tasks. Combined into a single query is the detection of the two most common sub-techniques, AT command and scheduled tasks.</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>( TgtProcName = &quot;at.exe&quot; AND TgtProcCmdLine ContainsCIS &quot;/interactive &quot; )
+<pre tabindex="0"><code>( TgtProcName = &#34;at.exe&#34; AND TgtProcCmdLine ContainsCIS &#34;/interactive &#34; )
 OR
-( ( ( TgtProcName = &quot;schtasks.exe&quot; AND TgtProcCmdLine ContainsCIS &quot;/create&quot; ) OR ( SrcProcCmdLine ContainsCIS &quot;New-ScheduledTask&quot; OR SrcProcCmdScript  ContainsCIS &quot;New-ScheduledTask&quot; ) ) AND SrcProcParentName Not In (&quot;services.exe&quot;, &quot;OfficeClickToRun.exe&quot; ) AND ObjectType != &quot;cross_process&quot; )
+( ( ( TgtProcName = &#34;schtasks.exe&#34; AND TgtProcCmdLine ContainsCIS &#34;/create&#34; ) OR ( SrcProcCmdLine ContainsCIS &#34;New-ScheduledTask&#34; OR SrcProcCmdScript  ContainsCIS &#34;New-ScheduledTask&#34; ) ) AND SrcProcParentName Not In (&#34;services.exe&#34;, &#34;OfficeClickToRun.exe&#34; ) AND ObjectType != &#34;cross_process&#34; )
 </code></pre><h3 id="t1562-impair-defenses">T1562 Impair Defenses</h3>
 <p><strong>Tactic:</strong> Defense Evasion</p>
 <p><strong>Platforms:</strong> Windows, Linux</p>
@@ -223,21 +222,21 @@ OR
 <p><strong>Description:</strong> It&rsquo;s not uncommon for attackers to take actions to blind defenders and one of the easiest and most common is to disable system logging, turning off the firewall, or disabling Windows security features. Below I&rsquo;ve broken out three queries that focus on detecting those attacks, and each of those queries is broken up logically by OR statements that could be used separately. Threre are so many detections to be built out for T1562, especially <a href="https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md">T1562.001</a> That I recommend you dig deeper into this.</p>
 <h4 id="t1562001-disable-logging">T1562.001 Disable Logging</h4>
 <p><strong>Description:</strong> In order, this script detects the disabling of Syslog and two methods of disabling Sysmon logging.</p>
-<pre tabindex="0"><code>( TgtProcName In Contains ( &quot;service&quot;, &quot;chkconfig&quot;, &quot;systemctl&quot; ) AND TgtProcCmdLine In Contains ( &quot;rsyslog stop&quot;, &quot;off rsyslog&quot;, &quot;stop rsyslog&quot;, &quot;disable rsyslog&quot; ) )
+<pre tabindex="0"><code>( TgtProcName In Contains ( &#34;service&#34;, &#34;chkconfig&#34;, &#34;systemctl&#34; ) AND TgtProcCmdLine In Contains ( &#34;rsyslog stop&#34;, &#34;off rsyslog&#34;, &#34;stop rsyslog&#34;, &#34;disable rsyslog&#34; ) )
 OR
-( TgtProcName = &quot;fltmc.exe&quot; AND TgtProcCmdLine ContainsCIS &quot;unload SysmonDrv&quot; )
+( TgtProcName = &#34;fltmc.exe&#34; AND TgtProcCmdLine ContainsCIS &#34;unload SysmonDrv&#34; )
 OR
-( TgtProcName = &quot;sysmon.exe&quot; AND TgtProcCmdLine ContainsCIS &quot;-u&quot; )
+( TgtProcName = &#34;sysmon.exe&#34; AND TgtProcCmdLine ContainsCIS &#34;-u&#34; )
 </code></pre><h4 id="t1562001-disable-security">T1562.001 Disable Security</h4>
 <p><strong>Description:</strong> The below query will detect disabling of AMSI providers or the disabling of Excel security features.</p>
-<pre tabindex="0"><code>( RegistryPath ContainsCIS &quot;\Microsoft\AMSI\Providers&quot; AND EventType In ( &quot;Registry Key Delete&quot;, &quot;Registry Value Delete&quot; ) )
+<pre tabindex="0"><code>( RegistryPath ContainsCIS &#34;\Microsoft\AMSI\Providers&#34; AND EventType In ( &#34;Registry Key Delete&#34;, &#34;Registry Value Delete&#34; ) )
 OR
-( RegistryKeyPath ContainsCIS &quot;Excel\Security&quot; OR RegistryKeyPath ContainsCIS &quot;Excel\Security\ProtectedView&quot;) AND RegistryKeyPath In Contains Anycase ( &quot;VBAWarnings&quot;,&quot;DisableInternetFilesInPV&quot;,&quot;DisableUnsafeLocationsInPV&quot;,&quot;DisableAttachementsInPV&quot; ) AND EventType In ( &quot;Registry Value Create&quot;,&quot;Registry Value Modified&quot; ) )
+( RegistryKeyPath ContainsCIS &#34;Excel\Security&#34; OR RegistryKeyPath ContainsCIS &#34;Excel\Security\ProtectedView&#34;) AND RegistryKeyPath In Contains Anycase ( &#34;VBAWarnings&#34;,&#34;DisableInternetFilesInPV&#34;,&#34;DisableUnsafeLocationsInPV&#34;,&#34;DisableAttachementsInPV&#34; ) AND EventType In ( &#34;Registry Value Create&#34;,&#34;Registry Value Modified&#34; ) )
 </code></pre><h4 id="t1562004-tamper-with-firewall">T1562.004 Tamper with Firewall</h4>
 <p><strong>Description:</strong> In order, the below query will detect the disable of the Windows firewall followed by methods for disabling the Linux firewall.</p>
-<pre tabindex="0"><code>( TgtProcName = &quot;netsh.exe&quot; AND TgtProcCmdLine ContainsCIS &quot;state off&quot; )
+<pre tabindex="0"><code>( TgtProcName = &#34;netsh.exe&#34; AND TgtProcCmdLine ContainsCIS &#34;state off&#34; )
 OR
-( SrcProcName In Contains (&quot;service&quot;,&quot;chkconfig&quot;) AND SrcProcCmdLine In Contains (&quot;off&quot;,&quot;stop&quot;) AND SrcProcCmdLine ContainsCIS &quot;tables&quot;) OR (TgtProcName = &quot;systemctl&quot; AND TgtProcCmdLine In Contains (&quot;stop&quot;,&quot;disable&quot;) AND TgtProcCmdLine Contains &quot;firewalld&quot; )
+( SrcProcName In Contains (&#34;service&#34;,&#34;chkconfig&#34;) AND SrcProcCmdLine In Contains (&#34;off&#34;,&#34;stop&#34;) AND SrcProcCmdLine ContainsCIS &#34;tables&#34;) OR (TgtProcName = &#34;systemctl&#34; AND TgtProcCmdLine In Contains (&#34;stop&#34;,&#34;disable&#34;) AND TgtProcCmdLine Contains &#34;firewalld&#34; )
 </code></pre><h3 id="t1059-command-and-scripting-interpreter">T1059 Command and Scripting Interpreter</h3>
 <p><strong>Tactic:</strong> Execution</p>
 <p><strong>Platforms:</strong> Windows</p>
@@ -245,11 +244,11 @@ OR
 <p><strong>Description:</strong> Attackers often abuse the command and script interpreters already present on systems to execute malicious code. For relevance and fidelity I&rsquo;ve broken detections out into detecting two different common methods, execution of scripts from temp directories and Powershell download cradles.</p>
 <h4 id="t1059001-powershell-download-cradles">T1059.001 Powershell Download Cradles</h4>
 <p><strong>Description:</strong> There are many methods for initiating a file download with Powershell, and a few obscure ways of executing Powershell, so here we&rsquo;re focusing on the command strings for detection.</p>
-<pre tabindex="0"><code>ProcessCmd In Contains Anycase  ( &quot;Net.WebClient&quot;, &quot;(iwr&quot;, &quot;DownloadString(&quot;, &quot;WinHttp.WinHttpRequest&quot;  , &quot;IEX &quot;, &quot;| IEX&quot;, &quot;InternetExplorer.Application&quot;, &quot;Msxml2.XMLHTTP&quot;, &quot;DownloadString(&quot; )
+<pre tabindex="0"><code>ProcessCmd In Contains Anycase  ( &#34;Net.WebClient&#34;, &#34;(iwr&#34;, &#34;DownloadString(&#34;, &#34;WinHttp.WinHttpRequest&#34;  , &#34;IEX &#34;, &#34;| IEX&#34;, &#34;InternetExplorer.Application&#34;, &#34;Msxml2.XMLHTTP&#34;, &#34;DownloadString(&#34; )
 </code></pre><h4 id="t1059-execution-from-temp-directories">T1059 Execution from Temp Directories</h4>
 <p><strong>Sub-Techniques:</strong> T1059.003 Windows Command Shell, T1059.005 Visual Basic</p>
 <p><strong>Description:</strong> The below will detect either cscript or cmd executing a bat or vbs from any Temp directory, regardless of case.</p>
-<pre tabindex="0"><code>SrcProcName In ( &quot;cscript.exe&quot;, &quot;cmd.exe&quot; ) AND SrcProcCmdLine RegExp &quot;(?i)\bTemp\b.*\.(bat|vbs)&quot; AND SrcProcParentName != &quot;msiexec.exe&quot;
+<pre tabindex="0"><code>SrcProcName In ( &#34;cscript.exe&#34;, &#34;cmd.exe&#34; ) AND SrcProcCmdLine RegExp &#34;(?i)\bTemp\b.*\.(bat|vbs)&#34; AND SrcProcParentName != &#34;msiexec.exe&#34;
 </code></pre><h3 id="t1218-signed-binary-proxy-execution">T1218 Signed Binary Proxy Execution</h3>
 <p><strong>Tactic:</strong> Execution</p>
 <p><strong>Platforms:</strong> Windows</p>
@@ -258,12 +257,12 @@ OR
 Signed binary proxy execution is a method for bypassing standard defenses through execution of malicious content by signed binaries. I&rsquo;ve decided to build these out as two queries, focusing on execution of scripts and remote content, because the other sub-techniques are require a lot of environment specific tuning.</p>
 <h4 id="t1218-script-execution">T1218 Script Execution</h4>
 <p><strong>Sub-Techniques:</strong> T1218.005 Mshta, T1218.011 Rundll32</p>
-<pre tabindex="0"><code>SrcProcName In ( &quot;mshta.exe&quot;, &quot;rundll32.exe&quot; ) and SrcProcCmdLine In Contains Anycase ( &quot;javascript:&quot;, &quot;vbscript:&quot;, &quot;wscript.shell&quot;, &quot;env:appdata&quot;, &quot;script:&quot;, &quot;mshtml,RunHTMLApplication&quot; )
+<pre tabindex="0"><code>SrcProcName In ( &#34;mshta.exe&#34;, &#34;rundll32.exe&#34; ) and SrcProcCmdLine In Contains Anycase ( &#34;javascript:&#34;, &#34;vbscript:&#34;, &#34;wscript.shell&#34;, &#34;env:appdata&#34;, &#34;script:&#34;, &#34;mshtml,RunHTMLApplication&#34; )
 </code></pre><h4 id="t1218-with-remote-payload">T1218 with Remote Payload</h4>
 <p><strong>Sub-Techniques:</strong> T1218.001 Compiled HTML, T1218.005 Mshta, T1218.007, T1218.010 Regsvr32, T1218.011 Rundll32</p>
 <p><strong>Description:</strong> The below query will detect execution of payloads with remote content (urls) in the command line.</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>SrcProcName In( &quot;mshta.exe&quot;, &quot;hh.exe&quot;, &quot;regsvr32.exe&quot;, &quot;rundll32.exe&quot;, &quot;msiexec.exe&quot; ) AND SrcProcCmdLine RegExp &quot;https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&amp;\/\/=]*)&quot;
+<pre tabindex="0"><code>SrcProcName In( &#34;mshta.exe&#34;, &#34;hh.exe&#34;, &#34;regsvr32.exe&#34;, &#34;rundll32.exe&#34;, &#34;msiexec.exe&#34; ) AND SrcProcCmdLine RegExp &#34;https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&amp;\/\/=]*)&#34;
 </code></pre><h3 id="t1482-domain-trust-discovery">T1482 Domain Trust Discovery</h3>
 <p><strong>Tactic:</strong> Discovery</p>
 <p><strong>Platforms:</strong> Windows</p>
@@ -271,25 +270,25 @@ Signed binary proxy execution is a method for bypassing standard defenses throug
 <p><strong>Description:</strong>
 The below query will detect domain trust enumeration/discovery through the execution of Nltest, dsquery, AdFind, and Powershell AD modules (in order).</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>( TgtProcName = &quot;nltest.exe&quot; AND ( TgtProcCmdLine ContainsCIS &quot;domain_trusts&quot; OR TgtProcCmdLine ContainsCIS &quot;all_trusts&quot; OR TgtProcCmdLine ContainsCIS &quot;dclist&quot; ))
+<pre tabindex="0"><code>( TgtProcName = &#34;nltest.exe&#34; AND ( TgtProcCmdLine ContainsCIS &#34;domain_trusts&#34; OR TgtProcCmdLine ContainsCIS &#34;all_trusts&#34; OR TgtProcCmdLine ContainsCIS &#34;dclist&#34; ))
 OR
-( TgtFileInternalName ContainsCIS &quot;AdFind&quot; AND ( TgtProcCmdLine ContainsCIS &quot;trustdmp&quot; OR TgtProcCmdLine ContainsCIS &quot;-f \&quot;(objectcategory=&quot;) )
+( TgtFileInternalName ContainsCIS &#34;AdFind&#34; AND ( TgtProcCmdLine ContainsCIS &#34;trustdmp&#34; OR TgtProcCmdLine ContainsCIS &#34;-f \&#34;(objectcategory=&#34;) )
 OR
-( ProcessCmd ContainsCIS &quot;Get-NetForestTrust&quot; OR ProcessCmd ContainsCIS &quot;Get-NetDomainTrust&quot; )
+( ProcessCmd ContainsCIS &#34;Get-NetForestTrust&#34; OR ProcessCmd ContainsCIS &#34;Get-NetDomainTrust&#34; )
 </code></pre><h3 id="t1548002-abuse-elevation-control-mechanism">T1548.002 Abuse Elevation Control Mechanism</h3>
 <p><strong>Tactic:</strong> Privilege Escalation, Defense Evasion</p>
 <p><strong>Platforms:</strong> Windows</p>
 <p><strong>Reference:</strong> <a href="https://attack.mitre.org/techniques/T1548/">https://attack.mitre.org/techniques/T1548/</a></p>
 <p><strong>Description:</strong> Elevation control mechanisms such as Windows UAC are often abused to elevate privileges. The below query will detect a few of these techniques, though the methods of UAC bypass are consistently expanding.</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>( SrcProcCmdLine ContainsCIS &quot;\shell\open\command&quot; AND SrcProcCmdLine RegExp &quot;(?i).*(cmd.exe|fodhelper.exe|ComputerDefaults.exe|sdclt.exe)&quot; AND ObjectType = &quot;process&quot; ) OR ( SrcProcCmdLine ContainsCIS &quot;C:\Windows \S&quot; AND ObjectType != &quot;registry&quot; )
+<pre tabindex="0"><code>( SrcProcCmdLine ContainsCIS &#34;\shell\open\command&#34; AND SrcProcCmdLine RegExp &#34;(?i).*(cmd.exe|fodhelper.exe|ComputerDefaults.exe|sdclt.exe)&#34; AND ObjectType = &#34;process&#34; ) OR ( SrcProcCmdLine ContainsCIS &#34;C:\Windows \S&#34; AND ObjectType != &#34;registry&#34; )
 </code></pre><h3 id="t1027004-compile-after-delivery">T1027.004 Compile After Delivery</h3>
 <p><strong>Tactic:</strong> Defense Evasion</p>
 <p><strong>Platforms:</strong> Windows</p>
 <p><strong>Reference:</strong> <a href="https://attack.mitre.org/techniques/T1027/004/">https://attack.mitre.org/techniques/T1027/004/</a></p>
 <p><strong>Description:</strong> Transfer and compilation of source code is often the easiest way to bypass over-the-wire detections as well as reducing detections. The below query will detect execution by csc or msbuild, limited by compilation with either target or output arguments.</p>
 <p><strong>Query:</strong></p>
-<pre tabindex="0"><code>SrcProcName In ( &quot;csc.exe&quot;, &quot;msbuild.exe&quot; ) AND TgtFileIsExecutable IS TRUE AND ( SrcProcCmdLine RegExp &quot;(?i).*\/t.*:.*&quot; OR SrcProcCmdLine RegExp &quot;(?i).*\/o.*:.*exe&quot; )
+<pre tabindex="0"><code>SrcProcName In ( &#34;csc.exe&#34;, &#34;msbuild.exe&#34; ) AND TgtFileIsExecutable IS TRUE AND ( SrcProcCmdLine RegExp &#34;(?i).*\/t.*:.*&#34; OR SrcProcCmdLine RegExp &#34;(?i).*\/o.*:.*exe&#34; )
 </code></pre>
     </div>
     

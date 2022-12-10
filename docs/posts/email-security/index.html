@@ -12,7 +12,7 @@
 <meta
   name="description"
   content="This post started as a quick note for securing email for unused domains but I decided I could expand upon it a bit more to define terms in a language I believe to be more clear than I&amp;rsquo;ve seen elsewhere, and from the view-point of an administrator or domain owner.
-Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain."
+Index SPF DMARC DKIM Securing Unused Domains Additional Resources SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain."
 />
 <meta
   name="keywords"
@@ -49,18 +49,17 @@ Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender P
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Email Security"/>
 <meta name="twitter:description" content="This post started as a quick note for securing email for unused domains but I decided I could expand upon it a bit more to define terms in a language I believe to be more clear than I&rsquo;ve seen elsewhere, and from the view-point of an administrator or domain owner.
-Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain."/>
+Index SPF DMARC DKIM Securing Unused Domains Additional Resources SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain."/>
 
 
 
 <meta property="og:title" content="Email Security" />
 <meta property="og:description" content="This post started as a quick note for securing email for unused domains but I decided I could expand upon it a bit more to define terms in a language I believe to be more clear than I&rsquo;ve seen elsewhere, and from the view-point of an administrator or domain owner.
-Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain." />
+Index SPF DMARC DKIM Securing Unused Domains Additional Resources SPF Sender Policy Framework (SPF) is a method for defining domains or ips that are allowed to send email for your domain." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://keyboardcrunch.github.io/posts/email-security/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-30T14:42:21-06:00" />
 <meta property="article:modified_time" content="2021-01-30T14:42:21-06:00" /><meta property="og:site_name" content="keyboardcrunch" />
-
 
 
 
@@ -202,7 +201,6 @@ Index  SPF DMARC DKIM Securing Unused Domains Additional Resources  SPF Sender P
 <pre tabindex="0"><code>hostname    value
 --------    -----
 _dmarc.           v=DMARC1; p=reject; rua=mailto:admin@example.com;
-
 </code></pre><h3 id="explanation-1">Explanation</h3>
 <p>The above record ensures that email recipients will <code>reject</code> any emails that fail validation (<code>quarantine</code> or <code>none</code> being the alternatives) and <code>rua</code> (report email address) ensures that each failure is reported to <a href="mailto:admin@example.com">admin@example.com</a>.</p>
 <h2 id="dkim">DKIM</h2>

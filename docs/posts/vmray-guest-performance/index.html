@@ -11,8 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned."
+  content="Warning At this time VMRay doesn&amp;rsquo;t officially support changing the CPU, they don&amp;rsquo;t seem to plan on supporting it, and they won&amp;rsquo;t help you to get it working. As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it&amp;rsquo;ll fail."
 />
 <meta
   name="keywords"
@@ -48,19 +47,16 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="VMRay Guest Performance"/>
-<meta name="twitter:description" content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned."/>
+<meta name="twitter:description" content="Warning At this time VMRay doesn&rsquo;t officially support changing the CPU, they don&rsquo;t seem to plan on supporting it, and they won&rsquo;t help you to get it working. As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it&rsquo;ll fail."/>
 
 
 
 <meta property="og:title" content="VMRay Guest Performance" />
-<meta property="og:description" content="I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.
-It appears that the default is -smp 1, meaning one vCPU socket/core is assigned." />
+<meta property="og:description" content="Warning At this time VMRay doesn&rsquo;t officially support changing the CPU, they don&rsquo;t seem to plan on supporting it, and they won&rsquo;t help you to get it working. As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it&rsquo;ll fail." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://keyboardcrunch.github.io/posts/vmray-guest-performance/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-17T16:07:01-06:00" />
 <meta property="article:modified_time" content="2022-11-17T16:07:01-06:00" /><meta property="og:site_name" content="keyboardcrunch" />
-
 
 
 
@@ -179,7 +175,11 @@ It appears that the default is -smp 1, meaning one vCPU socket/core is assigned.
 
     <div class="post-content">
       
-      <p>I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.</p>
+      <h2 id="warning">Warning</h2>
+<p>At this time VMRay doesn&rsquo;t officially support changing the CPU, they don&rsquo;t seem to plan on supporting it, and they won&rsquo;t help you to get it working.
+As of release 4.7 this is not working, you can get a VM guest to boot (and maybe even snapshot, though bootstrap exe may need to be triggered manually) but when you attempt to run an analysis (which boots from a snapshot) it&rsquo;ll fail. The failure makes it look like a driver issue, but I haven&rsquo;t found a workaround and lost interest after working with support.</p>
+<h2 id="the-original-post">The Original Post</h2>
+<p>I recently had the privilege to work with VMRay, a sandbox and malware analysis platform which uses qemu for virtualization, but I quickly noticed that the default settings used for creating virtual machines was grossly underwhelming. All of the VMs were running with a single core, and as far as I know each one of these machines was built without passing any custom qemu arguments during the creation process.</p>
 <p>It appears that the default is <code>-smp 1</code>, meaning one vCPU socket/core is assigned. To view how many CPU cores your host machine has available you can run <code>nproc</code> to get the value. So to have a 4 core system we just need to configure the guest to use the qemu argument <code>-smp 4</code>.</p>
 <p>If you&rsquo;re creating a new virtual machine then VMRay provides some configuration options with <code>vm_setup.py</code> most of it is hardware emulation, disk and memory size, with the final option to pass some qemu arguments. If you&rsquo;re trying increase CPU resources on the machines after the fact you follow the below steps, in our example we&rsquo;ll tell VMRay to launch the machine with 2 sockets and 4 cores (note that if you do define socket/cores then you need to use the maxcpus value as well).</p>
 <ol>
